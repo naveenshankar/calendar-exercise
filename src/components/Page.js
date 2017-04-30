@@ -58,7 +58,7 @@ export default class Page extends PureComponent {
     }
 
     _handleKeyDownEvent(e){
-        if(e.keyCode === 27){
+        if(e.keyCode === 27 && this.state.selectedEventId !== undefined){
             this._handleEvents.call(this);
         }
     }
