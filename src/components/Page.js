@@ -1,29 +1,12 @@
 import React, {PureComponent} from 'react';
 //import ReactDOM from 'react-dom';
 import Calendar from './Calendar';
+import DayNavigator from './DayNavigator';
 import EventDetailOverlay from './EventDetailOverlay';
 import {filterEventsByDay, getEventFromEvents, getDisplayDate} from '../utils';
 import DATA_SET from '../utils/data';
 
 import './Page.css';
-
-const DayNavigator = ({dateDisplay, onPrev, onNext}) => {
-    return (
-        <nav className="page__nav">
-            <button id="page__nav-previous"
-                className="page__nav-button page__prev-day"
-                title="Go to previous day"
-                onClick={onPrev}
-            />
-            <h2 className="page__date">{dateDisplay}</h2>
-            <button id="page__nav-next"
-                className="page__nav-button page__next-day"
-                title="Go to next day"
-                onClick={onNext}
-            />
-        </nav>
-    );
-};
 
 export default class Page extends PureComponent {
     state = {
@@ -32,10 +15,21 @@ export default class Page extends PureComponent {
 
         // The currently selected day represented by numerical timestamp
         day: Date.now(),
-
         // The currently selected event in the agenda
         // (mainly to trigger event detail overlay)
         selectedEventId: undefined
+    }
+
+    _handlePrev() {
+        /* SETTING STATE TO PREVIOUS DAY */
+        let currentDate = (new Date(this.state.day));
+        this.setState({"day":currentDate.setDate(currentDate.getDate() -1)});
+    }
+
+    _handleNext() {
+        /* SETTING STATE TO NEXT DAY */
+        let currentDate = (new Date(this.state.day));
+        this.setState({"day":currentDate.setDate(currentDate.getDate()+1)});
     }
 
     _handleSelectEvent(selectedEventId) {
@@ -46,7 +40,6 @@ export default class Page extends PureComponent {
     }
 
     _handleEventDetailOverlayClose(evt) {
-
         // let clickStatus = ReactDOM.findDOMNode(this.refs.overlay);
         // if(evt.target.className === "event-detail-overlay__close"){
         //     clickStatus = false;
@@ -56,19 +49,12 @@ export default class Page extends PureComponent {
         // }
 
         if(//(clickStatus === false ) ||
-           (evt && evt.target.className.indexOf("event-detail-overlay__") < 0) || evt.target.className === "event-detail-overlay__close"
+           (this.state.selectedEventId !== undefined && evt && evt.target.className.indexOf("event-detail-overlay__") < 0) || 
+           (this.state.selectedEventId !== undefined && evt.target.className === "event-detail-overlay__close")
            )
         {
             this._handleEvents.call(this);
         }
-    }
-
-    _handlePrev() {
-        // TODO: Update this.state.day to go back 1 day so previous button works
-    }
-
-    _handleNext() {
-        // TODO: Update this.state.day to go forward 1 day so next button works
     }
 
     _handleKeyDownEvent(e){
@@ -78,6 +64,8 @@ export default class Page extends PureComponent {
     }
 
     _handleEvents(){
+        let eventId = this.state.selectedEventId;
+        let selectedUIIndex;
         /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
             if(document.body.classList !== null){
                 document.body.classList.remove("unscrollable");
@@ -91,18 +79,19 @@ export default class Page extends PureComponent {
 
             /*UPDATING STATE AFTER FADEOUT ANIMATION */
             setTimeout(function(){
-                 this.setState({selectedEventId: undefined});
-                 /* FOCUS BACK ON THE FIRST SIMILAR ELEMENT THAT TRIGGERED THE MODAL WINDOW */
-                 if(document.getElementsByClassName("time-slot-event")[0] !== undefined){
-                    document.getElementsByClassName("time-slot-event")[0].focus();
-                }
+                 /* FOCUS BACK ON THE ELEMENT THAT TRIGGERED THE MODAL WINDOW */
+                Array.prototype.forEach.call(document.getElementsByClassName("time-slot-event"),function(val,index){
+                            if(val.dataset.id.toString() === eventId.toString()){
+                                selectedUIIndex = index;
+                            }
+                });
+                document.getElementsByClassName("time-slot-event")[selectedUIIndex].focus();
+                this.setState({selectedEventId: undefined});
             }.bind(this),500);
     }
 
     componentWillMount() {
-        /* ENABLING PAGE SCROLL IN THE BACKGROUND */
         window.addEventListener("keydown",this._handleKeyDownEvent.bind(this),false);
-        //window.addEventListener("keydown",this._handleEventDetailOverlayClose.bind(this),false);
     }
 
     render() {
@@ -127,6 +116,7 @@ export default class Page extends PureComponent {
                     <h1 className="page__title">Daily Agenda</h1>
                 </header>
                 <DayNavigator
+                    events={events}
                     dateDisplay={getDisplayDate(day)}
                     onPrev={this._handlePrev.bind(this)}
                     onNext={this._handleNext.bind(this)}

@@ -13,7 +13,6 @@ export default class EventDetailOverlay extends PureComponent {
     }
 
     componentWillMount() {
-        /* ENABLING PAGE SCROLL IN THE BACKGROUND */
         setTimeout(function(){
                 /* FOCUS ON THE FIRST ACTIONABLE ELEMENT IN THE MODAL WINDOW */
                 if(document.getElementById("event-detail-overlay__close") !== null){
@@ -33,7 +32,7 @@ export default class EventDetailOverlay extends PureComponent {
         let startHourDisplay = getDisplayHour(startHour)
         let endHourDisplay = getDisplayHour(endHour);
         let displayDateTime = `${displayDate} ${startHourDisplay} - ${endHourDisplay}`
-        
+
         let overlayClassName = "event-detail-overlay fade-in";
 
         /* changes to match label color with event color */

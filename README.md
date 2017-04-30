@@ -25,9 +25,12 @@ BONUS CSS:
 *	Added CSS3 fade in/fade out animations for the Event Detail Overlay in EventDetailOverlay.css
 JS:
 *	Added javascript to move focus to appropriate actionable UI items for ARIA purposes in EventDetailOverlay.js and Page.js
-*	Added feature to implement non-scrollable background on narrow screens the when detail overlay is shown in Page.js
-*	Added feature to implement scrollable background on larger screens the when detail overlay is shown in Page.js
-*	Added feature to gray out Past events in EventDetailOverlay.js and TimeSlotEvent.js
+*	Added javascript to implement non-scrollable background on narrow screens the when detail overlay is shown in Page.js
+*	Added javascript to implement scrollable background on larger screens the when detail overlay is shown in Page.js
+*	Added javascript to gray out Past events in EventDetailOverlay.js and TimeSlotEvent.js
+*	Added javascript to fix previous and next date button in Page.js
+*	Added DayNavigator component to implement filterering by the day in DayNavigator.js , Page.js and index.js
+*   Added Date Formatting using ES6 Template literals in index.js
 
 Potential Functionalities:
 Routing,Redux

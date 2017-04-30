@@ -13,7 +13,7 @@ export default class TimeSlotEvent extends PureComponent {
 
     render() {
         let {
-            event: {start,title, color},
+            event: {start,title, color,id},
             onSelect,
         } = this.props;
 
@@ -27,7 +27,7 @@ export default class TimeSlotEvent extends PureComponent {
         }
 
         return (
-            <button className={`time-slot-event ${buttonStatus}`} onClick={onSelect}>
+            <button data-id={id} className={`time-slot-event ${buttonStatus}`} onClick={onSelect}>
                 {title}
             </button>
         );
