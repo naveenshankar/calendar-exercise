@@ -1,25 +1,18 @@
-/**
- * TODO: Each time slot event should take up the full width and vertically stack
- * on top of each other. On larger screens, when there are multiple events for
- * a time slot, they should be evenly divided on the same row
- */
+
 .time-slot {
     display: flex;
     border-bottom: 1px solid #666;
     min-height: 3rem;
     box-sizing: border-box;
-
-    /**
-     * TODO: Figure out how not to have a bottom border on the last time-slot
-     * which causes a double border
-     */
+}
+.time-slot:last-child {
+    border-bottom: 0px; /* Fix for the last time slot with double borders */
 }
 .time-slot__hour-label {
     width: 4rem;
     text-align: right;
     border-right: 1px solid #666;
     padding: 0.5rem;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,14 +20,19 @@
 .time-slot__events {
     padding: 0.5rem;
     flex: 1;
-
     overflow: hidden;
 }
 .time-slot__event {
-    margin: 0.5rem;
-    max-width: 100%;
+    display: block; /* vertical stacking of Time slot buttons */
+    width: 100%; /* equal button sizes to Time Slot buttons */
+    margin: 5px auto;
 }
 
 @media screen and (min-width: 50rem) {
-    /* Override styles for larger screens here */
+    .time-slot__event {
+        margin: 0.5rem;
+        max-width: 100%;
+        display: inline-block; /* horizontal stacking of Time slot buttons for larger screens */
+        width: 23%; /* equal button sizes to Time Slot buttons for larger screens */
+    }
 }

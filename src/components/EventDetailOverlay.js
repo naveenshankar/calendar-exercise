@@ -1,6 +1,7 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {PureComponent} from 'react';
 import {EVENT_PROP_TYPE} from './constants';
 import {getDisplayDate, getDisplayHour} from '../utils';
+import PropTypes from 'prop-types'; // ES6 
 
 import './EventDetailOverlay.css';
 
@@ -8,6 +9,11 @@ export default class EventDetailOverlay extends PureComponent {
     static propTypes = {
         event: EVENT_PROP_TYPE.isRequired,
         onClose: PropTypes.func.isRequired
+    }
+
+    componentWillMount() {
+        /* ENABLING PAGE SCROLL IN THE BACKGROUND */
+        //window.onkeydown = this._handleEventDetailOverlayClose.bind(this);
     }
 
     render() {
@@ -23,30 +29,34 @@ export default class EventDetailOverlay extends PureComponent {
         let endHourDisplay = getDisplayHour(endHour);
 
         let displayDateTime = `${displayDate} ${startHourDisplay} - ${endHourDisplay}`
+        let overlayClassName = "event-detail-overlay fade-in";
 
         // TODO: The event label color should match the event color
         // TODO: Add appropriate ARIA tags to overlay/dialog
         // TODO: Support clicking outside of the overlay to close it
         // TODO: Support clicking ESC to close it
+
+        console.log("hours in EventDetail",hours);
+
         return (
-            <section className="event-detail-overlay">
+            <section id="event-detail-overlay" className={overlayClassName}>
                 <div className="event-detail-overlay__container">
                     <button
                         className="event-detail-overlay__close"
                         title="Close detail view"
                         onClick={onClose}
                     />
-                    <div>
+                    <div className="event-detail-overlay__heading">
                         {displayDateTime}
-                        <span
-                            className="event-detail-overlay__color"
+                        <span 
+                            className={'event-detail-overlay__'+color}
                             title={`Event label color: ${color}`}
                         />
                     </div>
                     <h1 className="event-detail-overlay__title">
                         {title}
                     </h1>
-                    <p>{description}</p>
+                    <p className="event-detail-overlay__description">{description}</p>
                 </div>
             </section>
         );

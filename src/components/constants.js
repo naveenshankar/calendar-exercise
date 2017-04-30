@@ -1,4 +1,4 @@
-import {PropTypes} from 'react';
+import {PropTypes} from 'prop-types'; // ES6 
 
 export const EVENT_PROP_TYPE = PropTypes.shape({
     id: PropTypes.number.isRequired,

@@ -1,7 +1,8 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {PureComponent} from 'react';
 import {EVENTS_PROP_TYPE} from './constants';
 import {getDisplayHour} from '../utils';
 import TimeSlotEvent from './TimeSlotEvent';
+import PropTypes from 'prop-types'; // ES6 
 
 import './TimeSlot.css';
 
@@ -13,11 +14,14 @@ export default class TimeSlot extends PureComponent {
     }
 
     _renderEvents() {
-        let {events, onSelectEvent} = this.props;
+        let {events, hour, onSelectEvent} = this.props;
+
+        console.log("event in TimeSlot",events);
 
         return events.map((event) => (
+            /* passing props hour into child component */
             <div key={event.id} className="time-slot__event">
-                <TimeSlotEvent event={event} onSelect={onSelectEvent.bind(null, event.id)} />
+                <TimeSlotEvent hour={hour} event={event} onSelect={onSelectEvent.bind(null, event.id)} />
             </div>
         ));
     }
