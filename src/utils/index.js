@@ -59,4 +59,21 @@ export const getDisplayHour = (hour) => _HOUR_DISPLAY_MAP[hour]
  */
 export const getEventFromEvents = (events, eventId) => (
     events.find(({id}) => id === eventId)
-)
+);
+
+/**
+ * Given an event start time , returns the event disabled status as true or false
+ * @param {number} start - start time of event
+ * @returns boolean
+ */
+export const isCurrentEventDisabled = (start) => {
+    if( new Date().getHours() > new Date(start).getHours()){
+            return true;
+    }
+    else{
+        return false;
+    }
+};
+
+
+

@@ -24,7 +24,7 @@
 .time-slot-event--disabled {
     background-color: lightgray;
     border-color: black;
-    cursor: default;
+    /*cursor: default;*/
 }
 .time-slot-event--disabled:hover {
     box-shadow: none;

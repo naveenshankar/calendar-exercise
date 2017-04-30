@@ -10,13 +10,13 @@ import './Page.css';
 const DayNavigator = ({dateDisplay, onPrev, onNext}) => {
     return (
         <nav className="page__nav">
-            <button
+            <button id="page__nav-previous"
                 className="page__nav-button page__prev-day"
                 title="Go to previous day"
                 onClick={onPrev}
             />
             <h2 className="page__date">{dateDisplay}</h2>
-            <button
+            <button id="page__nav-next"
                 className="page__nav-button page__next-day"
                 title="Go to next day"
                 onClick={onNext}
@@ -40,46 +40,44 @@ export default class Page extends PureComponent {
 
     _handleSelectEvent(selectedEventId) {
         /* DISABLING PAGE SCROLL IN THE BACKGROUND */
-        console.log("inside _handleSelectEvent");
-        console.log("this",this);
         document.body.classList.add("unscrollable");
-        
         document.onclick = this._handleEventDetailOverlayClose.bind(this);
-        //document.addEventListener("click",this._handleEventDetailOverlayClose.bind(this),{ capture: true });
-        //document.addEventListener("click",this._handleEventDetailOverlayClose.bind(this),{ once: true});
         this.setState({selectedEventId});
     }
 
     _handleEventDetailOverlayClose(evt) {
-        console.log("inside _handleEventDetailOverlayClose");
-        //var thisObj = this;
-        console.log("evt",evt);
-        console.log("evt.target.className",evt.target.className);
-        console.log("this",this);
 
-        // if (ReactDOM.findDOMNode(this.refs.overlay).contains(evt.target)) {
-        //   console.log("clicked inside overlay");
+        // let clickStatus = ReactDOM.findDOMNode(this.refs.overlay);
+        // if(evt.target.className === "event-detail-overlay__close"){
+        //     clickStatus = false;
         // }
-        // else{
-        //     console.log("clicked outside overlay");
+        // else if(clickStatus != null){
+        //     clickStatus = clickStatus.contains(evt.target);
         // }
 
-        if((evt && evt.keyCode === 27) || (evt && evt.dispatchConfig !== undefined) || (evt && evt.target.className.indexOf("event-detail-overlay__") < 0)){
+        if(
+            //(clickStatus === false ) ||
+            (evt && evt.target.className.indexOf("event-detail-overlay__") < 0) || evt.target.className === "event-detail-overlay__close")
+        {
+
             /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
             if(document.body.classList !== null){
                 document.body.classList.remove("unscrollable");
             }
-            console.log("document.getElementById('event-detail-overlay')",document.getElementById("event-detail-overlay"));
+
+            /* FADE OUT ANIMATION FOR MODAL WINDOW CLOSING */
             if(document.getElementById("event-detail-overlay") != null){
                 document.getElementById("event-detail-overlay").classList.remove("fade-in");
                 document.getElementById("event-detail-overlay").classList.add("fade-out");
             }
 
-            //console.log("thisObj",thisObj);
-            //document.removeEventListener("click",thisObj._handleEventDetailOverlayClose.bind(thisObj),{ capture: true });
-
+            /*UPDATING STATE AFTER FADEOUT ANIMATION */
             setTimeout(function(){
                  this.setState({selectedEventId: undefined});
+                 /* FOCUS BACK ON THE FIRST SIMILAR ELEMENT THAT TRIGGERED THE MODAL WINDOW */
+                 if(document.getElementsByClassName("time-slot-event")[0] !== undefined){
+                    document.getElementsByClassName("time-slot-event")[0].focus();
+                }
             }.bind(this),500);
         }
     }
@@ -92,9 +90,52 @@ export default class Page extends PureComponent {
         // TODO: Update this.state.day to go forward 1 day so next button works
     }
 
+    _handleKeyDownEvent(e){
+        if(e.keyCode === 27){
+
+            /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
+            if(document.body.classList !== null){
+                document.body.classList.remove("unscrollable");
+            }
+
+            /* FADE OUT ANIMATION FOR MODAL WINDOW CLOSING */
+            if(document.getElementById("event-detail-overlay") != null){
+                document.getElementById("event-detail-overlay").classList.remove("fade-in");
+                document.getElementById("event-detail-overlay").classList.add("fade-out");
+            }
+
+            /*UPDATING STATE AFTER FADEOUT ANIMATION */
+            setTimeout(function(){
+                 this.setState({selectedEventId: undefined});
+                 /* FOCUS BACK ON THE FIRST SIMILAR ELEMENT THAT TRIGGERED THE MODAL WINDOW */
+                 if(document.getElementsByClassName("time-slot-event")[0] !== undefined){
+                    document.getElementsByClassName("time-slot-event")[0].focus();
+                }
+            }.bind(this),500);
+
+        }
+    }
+
+    _handleClickEvent(e){
+        console.log("inside _handleClickEvent");
+        console.log("this in _handleClickEvent",this);
+        
+        if(e.keyCode === 27){
+            console.log("not escape");
+            setTimeout(function(){
+                 this.setState({selectedEventId: undefined});
+                 /* FOCUS BACK ON THE FIRST SIMILAR ELEMENT THAT TRIGGERED THE MODAL WINDOW */
+                 if(document.getElementsByClassName("time-slot-event")[0] !== undefined){
+                    document.getElementsByClassName("time-slot-event")[0].focus();
+                }
+            }.bind(this),500);
+        }
+    }
+
     componentWillMount() {
         /* ENABLING PAGE SCROLL IN THE BACKGROUND */
-        window.onkeydown = this._handleEventDetailOverlayClose.bind(this);
+        window.addEventListener("keydown",this._handleKeyDownEvent.bind(this),false);
+        //window.addEventListener("keydown",this._handleEventDetailOverlayClose.bind(this),false);
     }
 
     render() {
@@ -106,7 +147,7 @@ export default class Page extends PureComponent {
         if (selectedEvent) {
             eventDetailOverlay = (
                 <EventDetailOverlay 
-                    isOpen="false" ref='overlay'
+                    ref='overlay'
                     event={selectedEvent}
                     onClose={this._handleEventDetailOverlayClose.bind(this)}
                 />
@@ -123,7 +164,7 @@ export default class Page extends PureComponent {
                     onPrev={this._handlePrev.bind(this)}
                     onNext={this._handleNext.bind(this)}
                 />
-                <Calendar isModalOpen={caldr => this.modalStatus = caldr}  events={filteredEvents} onSelectEvent={this._handleSelectEvent.bind(this)} />
+                <Calendar events={filteredEvents} onSelectEvent={this._handleSelectEvent.bind(this)} />
                 {eventDetailOverlay}
             </div>
         );

@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {EVENT_PROP_TYPE} from './constants';
 import {getDisplayDate, getDisplayHour} from '../utils';
 import PropTypes from 'prop-types'; // ES6 
+import {isCurrentEventDisabled} from '../utils';
 
 import './EventDetailOverlay.css';
 
@@ -13,7 +14,12 @@ export default class EventDetailOverlay extends PureComponent {
 
     componentWillMount() {
         /* ENABLING PAGE SCROLL IN THE BACKGROUND */
-        //window.onkeydown = this._handleEventDetailOverlayClose.bind(this);
+        setTimeout(function(){
+                /* FOCUS ON THE FIRST ACTIONABLE ELEMENT IN THE MODAL WINDOW */
+                if(document.getElementById("event-detail-overlay__close") !== null){
+                    document.getElementById("event-detail-overlay__close").focus();
+                }
+        },500);
     }
 
     render() {
@@ -24,6 +30,7 @@ export default class EventDetailOverlay extends PureComponent {
 
         // TODO: Fix. If hours was other than 1 the UI would break
         let endHour = startHour + hours;
+        console.log("hours in EventDetailOverlay",hours);
 
         let startHourDisplay = getDisplayHour(startHour)
         let endHourDisplay = getDisplayHour(endHour);
@@ -31,25 +38,27 @@ export default class EventDetailOverlay extends PureComponent {
         let displayDateTime = `${displayDate} ${startHourDisplay} - ${endHourDisplay}`
         let overlayClassName = "event-detail-overlay fade-in";
 
-        // TODO: The event label color should match the event color
-        // TODO: Add appropriate ARIA tags to overlay/dialog
-        // TODO: Support clicking outside of the overlay to close it
-        // TODO: Support clicking ESC to close it
-
-        console.log("hours in EventDetail",hours);
+        /* changes to match label color with event color */
+        let colorStatus ;
+        if(isCurrentEventDisabled(start)){
+            colorStatus = 'event-detail-overlay__disabled';
+        }
+        else{
+            colorStatus = 'event-detail-overlay__'+color;
+        }
 
         return (
-            <section id="event-detail-overlay" className={overlayClassName}>
+            <section id="event-detail-overlay" className={overlayClassName} role="dialog" aria-labelledby="Event Description" aria-describedby="Event Description">
                 <div className="event-detail-overlay__container">
-                    <button
+                    <button id="event-detail-overlay__close"
                         className="event-detail-overlay__close"
-                        title="Close detail view"
+                        title="Close event detail view"
                         onClick={onClose}
                     />
                     <div className="event-detail-overlay__heading">
                         {displayDateTime}
                         <span 
-                            className={'event-detail-overlay__'+color}
+                            className={colorStatus}
                             title={`Event label color: ${color}`}
                         />
                     </div>
