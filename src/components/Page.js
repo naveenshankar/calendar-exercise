@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react';
-//import ReactDOM from 'react-dom';
 import Calendar from './Calendar';
 import DayNavigator from './DayNavigator';
 import EventDetailOverlay from './EventDetailOverlay';
@@ -40,15 +39,8 @@ export default class Page extends PureComponent {
     }
 
     _handleEventDetailOverlayClose(evt) {
-        // let clickStatus = ReactDOM.findDOMNode(this.refs.overlay);
-        // if(evt.target.className === "event-detail-overlay__close"){
-        //     clickStatus = false;
-        // }
-        // else if(clickStatus != null){
-        //     clickStatus = clickStatus.contains(evt.target);
-        // }
 
-        if(//(clickStatus === false ) ||
+        if(
            (this.state.selectedEventId !== undefined && evt && evt.target.className.indexOf("event-detail-overlay__") < 0) || 
            (this.state.selectedEventId !== undefined && evt.target.className === "event-detail-overlay__close")
            )
