@@ -30,12 +30,10 @@ export default class EventDetailOverlay extends PureComponent {
 
         // TODO: Fix. If hours was other than 1 the UI would break
         let endHour = startHour + hours;
-        console.log("hours in EventDetailOverlay",hours);
-
         let startHourDisplay = getDisplayHour(startHour)
         let endHourDisplay = getDisplayHour(endHour);
-
         let displayDateTime = `${displayDate} ${startHourDisplay} - ${endHourDisplay}`
+        
         let overlayClassName = "event-detail-overlay fade-in";
 
         /* changes to match label color with event color */

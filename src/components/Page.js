@@ -55,30 +55,11 @@ export default class Page extends PureComponent {
         //     clickStatus = clickStatus.contains(evt.target);
         // }
 
-        if(
-            //(clickStatus === false ) ||
-            (evt && evt.target.className.indexOf("event-detail-overlay__") < 0) || evt.target.className === "event-detail-overlay__close")
+        if(//(clickStatus === false ) ||
+           (evt && evt.target.className.indexOf("event-detail-overlay__") < 0) || evt.target.className === "event-detail-overlay__close"
+           )
         {
-
-            /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
-            if(document.body.classList !== null){
-                document.body.classList.remove("unscrollable");
-            }
-
-            /* FADE OUT ANIMATION FOR MODAL WINDOW CLOSING */
-            if(document.getElementById("event-detail-overlay") != null){
-                document.getElementById("event-detail-overlay").classList.remove("fade-in");
-                document.getElementById("event-detail-overlay").classList.add("fade-out");
-            }
-
-            /*UPDATING STATE AFTER FADEOUT ANIMATION */
-            setTimeout(function(){
-                 this.setState({selectedEventId: undefined});
-                 /* FOCUS BACK ON THE FIRST SIMILAR ELEMENT THAT TRIGGERED THE MODAL WINDOW */
-                 if(document.getElementsByClassName("time-slot-event")[0] !== undefined){
-                    document.getElementsByClassName("time-slot-event")[0].focus();
-                }
-            }.bind(this),500);
+            this._handleEvents.call(this);
         }
     }
 
@@ -92,8 +73,12 @@ export default class Page extends PureComponent {
 
     _handleKeyDownEvent(e){
         if(e.keyCode === 27){
+            this._handleEvents.call(this);
+        }
+    }
 
-            /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
+    _handleEvents(){
+        /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
             if(document.body.classList !== null){
                 document.body.classList.remove("unscrollable");
             }
@@ -112,24 +97,6 @@ export default class Page extends PureComponent {
                     document.getElementsByClassName("time-slot-event")[0].focus();
                 }
             }.bind(this),500);
-
-        }
-    }
-
-    _handleClickEvent(e){
-        console.log("inside _handleClickEvent");
-        console.log("this in _handleClickEvent",this);
-        
-        if(e.keyCode === 27){
-            console.log("not escape");
-            setTimeout(function(){
-                 this.setState({selectedEventId: undefined});
-                 /* FOCUS BACK ON THE FIRST SIMILAR ELEMENT THAT TRIGGERED THE MODAL WINDOW */
-                 if(document.getElementsByClassName("time-slot-event")[0] !== undefined){
-                    document.getElementsByClassName("time-slot-event")[0].focus();
-                }
-            }.bind(this),500);
-        }
     }
 
     componentWillMount() {
