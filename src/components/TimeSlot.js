@@ -1,9 +1,10 @@
-import React, {PureComponent} from 'react';
-import {EVENTS_PROP_TYPE} from './constants';
+import PropTypes from 'prop-types'; // ES6 
+import React from 'react';
+import './TimeSlot.css';
 import {getDisplayHour} from '../utils';
 import TimeSlotEvent from './TimeSlotEvent';
-import PropTypes from 'prop-types'; // ES6 
-import './TimeSlot.css';
+import {PureComponent} from 'react';
+import {EVENTS_PROP_TYPE} from './constants';
 
 export default class TimeSlot extends PureComponent {
     static propTypes = {
@@ -37,3 +38,9 @@ export default class TimeSlot extends PureComponent {
         );
     }
 }
+
+
+
+
+
+

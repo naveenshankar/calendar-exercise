@@ -11,7 +11,6 @@ export default class Page extends PureComponent {
     state = {
         // unfiltered list of events
         events: DATA_SET,
-
         // The currently selected day represented by numerical timestamp
         day: Date.now(),
         // The currently selected event in the agenda
@@ -21,12 +20,14 @@ export default class Page extends PureComponent {
 
     _handlePrev() {
         /* SETTING STATE TO PREVIOUS DAY */
+        this.setState({selectedEventId: undefined});
         let currentDate = (new Date(this.state.day));
         this.setState({"day":currentDate.setDate(currentDate.getDate() -1)});
     }
 
     _handleNext() {
         /* SETTING STATE TO NEXT DAY */
+        this.setState({selectedEventId: undefined});
         let currentDate = (new Date(this.state.day));
         this.setState({"day":currentDate.setDate(currentDate.getDate()+1)});
     }
@@ -39,7 +40,6 @@ export default class Page extends PureComponent {
     }
 
     _handleEventDetailOverlayClose(evt) {
-
         if(
            (this.state.selectedEventId !== undefined && evt && evt.target.className.indexOf("event-detail-overlay__") < 0) || 
            (this.state.selectedEventId !== undefined && evt.target.className === "event-detail-overlay__close")

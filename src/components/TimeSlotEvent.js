@@ -1,9 +1,8 @@
+import './TimeSlotEvent.css';
+import {isCurrentEventDisabled} from '../utils';
 import React, {PureComponent} from 'react';
 import {EVENT_PROP_TYPE} from './constants';
 import PropTypes from 'prop-types'; // ES6 
-import {isCurrentEventDisabled} from '../utils';
-
-import './TimeSlotEvent.css';
 
 export default class TimeSlotEvent extends PureComponent {
     static propTypes = {
@@ -17,7 +16,7 @@ export default class TimeSlotEvent extends PureComponent {
             onSelect,
         } = this.props;
 
-        /* disable button that represents an event in the past */
+        // disable button that represents an event in the past 
         let buttonStatus ;
         if(isCurrentEventDisabled(start)){
             buttonStatus = "time-slot-event--disabled";
@@ -33,3 +32,5 @@ export default class TimeSlotEvent extends PureComponent {
         );
     }
 }
+
+

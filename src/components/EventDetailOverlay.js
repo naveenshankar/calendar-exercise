@@ -1,10 +1,9 @@
+import './EventDetailOverlay.css';
+import {isCurrentEventDisabled} from '../utils';
+import PropTypes from 'prop-types'; // ES6 
+import {getDisplayDate, getDisplayHour} from '../utils';
 import React, {PureComponent} from 'react';
 import {EVENT_PROP_TYPE} from './constants';
-import {getDisplayDate, getDisplayHour} from '../utils';
-import PropTypes from 'prop-types'; // ES6 
-import {isCurrentEventDisabled} from '../utils';
-
-import './EventDetailOverlay.css';
 
 export default class EventDetailOverlay extends PureComponent {
     static propTypes = {
@@ -35,7 +34,7 @@ export default class EventDetailOverlay extends PureComponent {
 
         let overlayClassName = "event-detail-overlay fade-in";
 
-        /* changes to match label color with event color */
+        // changes to match label color with event color 
         let colorStatus ;
         if(isCurrentEventDisabled(start)){
             colorStatus = 'event-detail-overlay__disabled';
@@ -68,3 +67,5 @@ export default class EventDetailOverlay extends PureComponent {
         );
     }
 }
+
+

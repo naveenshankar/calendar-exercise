@@ -1,11 +1,11 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types'; // ES6 
 import {filterEventsByHour} from '../utils';
 import {HOURS_DAY} from '../utils/constants';
-import {EVENTS_PROP_TYPE} from './constants';
 import TimeSlot from './TimeSlot';
-
 import './Calendar.css';
+import {PureComponent} from 'react';
+import {EVENTS_PROP_TYPE} from './constants';
 
 export default class Calendar extends PureComponent {
     static propTypes = {
@@ -41,3 +41,7 @@ export default class Calendar extends PureComponent {
         );
     }
 }
+
+
+
+
