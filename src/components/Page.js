@@ -58,7 +58,7 @@ export default class Page extends PureComponent {
     _handleEvents(){
         let eventId = this.state.selectedEventId;
         let selectedUIIndex;
-        /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
+            /* ENABLING PAGE SCROLL IN THE BACKGROUND AND ENABLING OVERFLOW CLOSE FOR ESCAPE/CLICK OUTSIDE OVERFLOW*/
             if(document.body.classList !== null){
                 document.body.classList.remove("unscrollable");
             }

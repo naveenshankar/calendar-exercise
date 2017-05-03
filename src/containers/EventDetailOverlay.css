@@ -9,7 +9,7 @@
     left: 0;
     box-sizing: border-box;
     padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.25);
+    /*background-color: rgba(255, 255, 255, 0.25);*/
 }
 @media (min-width: 50rem) {
     .event-detail-overlay {
@@ -32,9 +32,9 @@
     border-radius: 5px; /* Rounded corners for Event detail overlay */
 }
 @-webkit-keyframes fade-out {
-0% { opacity: 1;}
-85% {opacity: 0.3;}
-100% {opacity: 0;}
+    0% { opacity: 1;}
+    50%  {opacity: 0.5;}
+    100% {opacity: 0;}
 }
 @-webkit-keyframes fade-in {
     0%   {opacity: 0.2;}
@@ -42,10 +42,10 @@
     100% {opacity: 1;}
 }
 .fade-out{
-    -webkit-animation: fade-out 0.5s ease-in;
+    -webkit-animation: fade-out 0.5s;
 }
 .fade-in{
-    -webkit-animation: fade-in 0.5s ease-in;
+    -webkit-animation: fade-in 0.5s;
 }
 .event-detail-overlay__close {
     position: absolute;

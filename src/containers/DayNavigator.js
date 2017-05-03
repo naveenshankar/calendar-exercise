@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'; // ES6
 import {filterEventsByDay, getDisplayDate} from '../utils';
 import DATA_SET from '../utils/data';
 import {setEventsByDay} from '../actions/DayNavigatorActions';
+import {closeOverlay} from '../actions/TimeSlotEventActions';
 
 class DayNavigator extends React.Component {
     componentWillMount()
@@ -25,7 +26,8 @@ class DayNavigator extends React.Component {
                     title="Go to previous day"
                     onClick={() => 
                                 {
-                                this.props.setEventsByDay(DATA_SET,previousDate)
+                                this.props.setEventsByDay(DATA_SET,previousDate);
+                                this.props.closeOverlay();
                                 }
                             }
                 />;
@@ -43,7 +45,8 @@ class DayNavigator extends React.Component {
                     title="Go to next day"
                     onClick={() => 
                                 {
-                                    this.props.setEventsByDay(DATA_SET,nextDate)
+                                    this.props.setEventsByDay(DATA_SET,nextDate);
+                                    this.props.closeOverlay();
                                 }
                             }
                 />;
@@ -75,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
      return {
         setEventsByDay: (events,day) => {
             dispatch(setEventsByDay(events,day));
+        },
+        closeOverlay: () => {
+            dispatch(closeOverlay());
         }
      };
 };

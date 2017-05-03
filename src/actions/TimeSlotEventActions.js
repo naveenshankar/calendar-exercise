@@ -15,8 +15,8 @@ export function closeOverlay() {
         type: "CLOSE_OVERLAY",
 		payload: new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve({"overlayReadyToLaunch": false,"selectedTimeSlot":{}});
-            }, 0);
+                resolve({"overlayReadyToLaunch": false});
+            }, 20);
         })
     };
 }

@@ -6,9 +6,7 @@ import {getDisplayHour} from '../utils';
 import TimeSlotEvent from './TimeSlotEvent';
 
 class TimeSlot extends React.Component {
-
     render() {
-
         let displayHour = getDisplayHour(this.props["data-tsIndex"]);
         let timeSlotEventsArray = this.props.calendarState.slotsMap[this.props["data-tsIndex"]];
 

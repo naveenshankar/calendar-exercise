@@ -14,8 +14,7 @@ const timeSlotEventReducer = (state = {
         case "CLOSE_OVERLAY_FULFILLED":
             state = {
                 ...state,
-                overlayReadyToLaunch:action.payload.overlayReadyToLaunch,
-                selectedTimeSlot:action.payload.selectedTimeSlot
+                overlayReadyToLaunch:action.payload.overlayReadyToLaunch
             };
             break;
         default:
