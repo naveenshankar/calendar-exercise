@@ -5,6 +5,8 @@ HOW THE DAY WAS SAVED - A SUMMARY
 Implemented Technologies:
 
 New Functionalities Added/Issues Fixed:
+*	REDUX
+*   REACT-ROUTER
 
 * 	HTML:
 * 	Added ARIA Attributes to Dialog/overlay container and close button
@@ -35,6 +37,3 @@ New Functionalities Added/Issues Fixed:
 *	Added javascript to fix previous and next date button in Page.js
 *	Added DayNavigator component to implement filterering by the day in DayNavigator.js , Page.js and index.js
 *   Added Date Formatting using ES6 Template literals in index.js
-
-Potential Functionalities:
-Routing,Redux
