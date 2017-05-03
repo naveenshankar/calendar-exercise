@@ -1,18 +1,10 @@
 import React, {PureComponent} from 'react';
-import './Page.css';
-//import Page from './Page';
-
+import '../containers/Page.css';
 import Calendar from '../containers/Calendar';
 import EventDetailOverlay from '../containers/EventDetailOverlay';
 import DayNavigator from '../containers/DayNavigator';
 
 export default class App extends PureComponent {
-	//IMPLEMENTED WITHOUT REDUX
-    // render() {
-    //     return (<Page />);
-    // }
-
-    // IMPLEMENTED WITH REDUX
     render() {
         return (
         	<div className="page">
