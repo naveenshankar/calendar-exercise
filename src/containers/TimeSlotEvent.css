@@ -1,7 +1,3 @@
-/*
- * TODO: Time slot events should have rounded corners
- * TODO: Past events should display faded-out
- */
 .time-slot-event {
     display: block;
     cursor: pointer;
@@ -11,7 +7,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 100%;
+    width: 100%;
+    border-radius:5px; /* rounded corners for time slot events */
 }
 .time-slot-event::-moz-focus-inner {
   border: 0;
@@ -23,6 +20,16 @@
     box-shadow: 0 0 0.25rem 0 #51b1e0;
     border-color: #000;
 }
+/* Gray out Past events start */
+.time-slot-event--disabled {
+    background-color: lightgray;
+    border-color: black;
+    /*cursor: default;*/
+}
+.time-slot-event--disabled:hover {
+    box-shadow: none;
+}
+/* Gray out Past events end */
 .time-slot-event--sky {
     background-color: #d1e8f0;
     border-color: #307992;

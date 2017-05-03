@@ -1,15 +1,26 @@
-/*
- * TODO: page needs a gradient from white (top) to light gray (bottom)
- * TODO: On narrow screens the background shouldn't scroll when detail overlay is shown
- */
 
+#root{
+    background: linear-gradient(#fff, #808080); /* page gradient added here for the entire page*/
+    min-height:800px;
+}
+h1,p{
+    text-align:center;
+}
+.link__activity,
+.back__on__track{
+    width: 100%;
+    text-align: center;
+    float: right;
+}
+body.unscrollable{
+    overflow:hidden; /* On narrow screens the background shouldn't scroll when detail overlay is shown */
+}
 .page {
     margin: 1rem;
 }
 .page__header {
     margin-bottom: 1rem;
 }
-
 .page__nav {
     display: flex;
     justify-content: space-between;
@@ -21,6 +32,10 @@
     background: none;
     padding: 0;
     cursor: pointer;
+}
+.page__nav-button-disabled{
+    color: #808080;
+    cursor: default;
 }
 .page__nav-button::-moz-focus-inner {
     border: 0;
@@ -44,4 +59,10 @@
 }
 .page__next-day::after {
     content: '▶︎';
+}
+
+@media screen and (min-width: 50rem) {
+    body.unscrollable{
+        overflow:auto;  /* On larger screens the background may scroll when detail overlay is shown */
+    }
 }
